@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; // v1.x
 import {
@@ -15,39 +13,34 @@ import {
 
 import MenuIcon from '@material-ui/icons/Menu';
 
-
+import logo from './logo.svg';
 import './App.css';
 
-// const logo = require('./logo.svg');
-// type State = {
-//   open?: boolean,
-//   logged?: boolean
-// };
+import { Route, Link } from "react-router-dom";
+
+import Hello from './components/Hello';
+import Dashboard from './components/Dashboard';
+
 const baseTheme = createMuiTheme({
   palette: {
     type: 'dark',
   },
 });
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   menuButton: {
-//     marginRight: theme.spacing(2),
-//   },
-//   title: {
-//     flexGrow: 1,
-//   },
-// }));
-
 class App extends React.Component {
-
   constructor() {
     super();
+
+    // Set initial state
     this.state = {
       open: false,
-      logged: false
+      logged: false,
+      selectedMenuItem: null
+    };
+
+    this.menuItems = {
+      "Home": '/',
+      "Dashboard": '/dashboard',
     };
   }
 
@@ -61,6 +54,22 @@ class App extends React.Component {
 
   toggleMenu = () => {
     this.setState({ open: !this.state.open });
+  }
+
+  closeMenu = () => {
+    this.setState({ open: false });
+  }
+
+  selectMenuItem = (key) => {
+    this.setState({ selectedMenuItem: key });
+    this.closeMenu();
+  }
+
+  createMenu = () => {
+    return Object.entries(this.menuItems).map(([key, value]) => {
+      const LinkComponent = React.forwardRef((props, ref) => <Link innerRef={ref} to={value} {...props}>{key}</Link>);
+      return <MenuItem className="MenuItem" onClick={() => this.selectMenuItem(key)} component={LinkComponent}>{key}</MenuItem>;
+    });
   }
 
   render() {
@@ -82,10 +91,11 @@ class App extends React.Component {
 
           <Drawer open={this.state.open} docked={false} onBackdropClick={this.toggleMenu}>
             <img src={logo} className="App-logo" alt="logo" />
-            <MenuItem className="MenuItem">Home</MenuItem>
-            <MenuItem className="MenuItem">Other places</MenuItem>
+            {this.createMenu()}
           </Drawer>
 
+          <Route exact path='/' component={Hello}/>
+          <Route path='/dashboard' component={Dashboard}/>
 
         </MuiThemeProvider>
       </div>
