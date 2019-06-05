@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles'; // v1.x
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'; // v1.x
 import {
   AppBar,
   Button,
@@ -12,8 +12,6 @@ import {
   Typography,
   Toolbar,
 } from '@material-ui/core';
-// import Drawer from '@material-ui/core/Drawer';
-// import MenuItem from '@material-ui/core/MenuItem';
 
 import MenuIcon from '@material-ui/icons/Menu';
 
