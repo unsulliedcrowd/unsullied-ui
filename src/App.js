@@ -18,8 +18,19 @@ import './App.css';
 
 import { Route, Link } from "react-router-dom";
 
-import Hello from './components/Hello';
-import Dashboard from './components/Dashboard';
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+
+// App specific imports
+import Hello from './routes/Hello';
+import Dashboard from './routes/Dashboard';
+
+import Config from './Config';
+
+
+const client = new ApolloClient({
+  uri: Config.API_URI
+});
 
 const baseTheme = createMuiTheme({
   palette: {
@@ -76,27 +87,28 @@ class App extends React.Component {
     return (
       <div className="App">
         <MuiThemeProvider theme={baseTheme}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton edge="start" className="MenuIconButton" color="inherit" aria-label="Menu" onClick={this.toggleMenu}>
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" className="TitleBar">
-                Unsullied
-              </Typography>
-              {this.state.logged ?  <Button onClick={this.logout}>Logout</Button> : <Button onClick={this.login}>Login</Button>}
+          <ApolloProvider client={client}>
+            <AppBar position="static">
+              <Toolbar>
+                <IconButton edge="start" className="MenuIconButton" color="inherit" aria-label="Menu" onClick={this.toggleMenu}>
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" className="TitleBar">
+                  Unsullied
+                </Typography>
+                {this.state.logged ?  <Button onClick={this.logout}>Logout</Button> : <Button onClick={this.login}>Login</Button>}
 
-            </Toolbar>
-          </AppBar>
+              </Toolbar>
+            </AppBar>
 
-          <Drawer open={this.state.open} docked={false} onBackdropClick={this.toggleMenu}>
-            <img src={logo} className="App-logo" alt="logo" />
-            {this.createMenu()}
-          </Drawer>
+            <Drawer open={this.state.open} docked={false} onBackdropClick={this.toggleMenu}>
+              <img src={logo} className="App-logo" alt="logo" />
+              {this.createMenu()}
+            </Drawer>
 
-          <Route exact path='/' component={Hello}/>
-          <Route path='/dashboard' component={Dashboard}/>
-
+            <Route exact path='/' component={Hello}/>
+            <Route path='/dashboard' component={Dashboard}/>
+          </ApolloProvider>
         </MuiThemeProvider>
       </div>
     );

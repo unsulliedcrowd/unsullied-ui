@@ -3,6 +3,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
+import Users from '../data/users';
+
 function Dashboard() {
   return (
     <React.Fragment>
@@ -12,7 +14,7 @@ function Dashboard() {
           Dashboard
         </Typography>
 
-        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} />
+        <Users />
       </Container>
     </React.Fragment>
   );
