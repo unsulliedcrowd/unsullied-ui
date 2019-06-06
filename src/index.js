@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/unsullied-ui">
     <App />
   </BrowserRouter>,
   document.getElementById('root')

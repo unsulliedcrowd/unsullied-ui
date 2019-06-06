@@ -63,84 +63,68 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - add_ssh_keys:
+          fingerprints:
+            - "81:ef:60:b9:cf:08:3b:b3:32:a8:bd:d5:d8:bd:9c:f2"
       - deploy:
           name: Deploy to GitHub Pages
           command: |
-              set -e
-
-              remote=$(git config remote.origin.url)
-
-              if [ ! -d "build" ]
-              then
-                  echo "build folder not found"
-                  exit 1
-              fi
-
-              mkdir gh-pages-branch
-              cd gh-pages-branch
-              git config --global user.email "$GH_EMAIL" > /dev/null 2>&1
-              git config --global user.name "$GH_NAME" > /dev/null 2>&1
-              git init
-              git remote add --fetch origin "$remote"
-
-              if git rev-parse --verify origin/gh-pages > /dev/null 2>&1
-              then
-                  git checkout gh-pages
-                  git rm -rf .
-              else
-                  git checkout --orphan gh-pages
-              fi
-
-              cp -a "../build/." .
-
-              git add -A
-              git commit --allow-empty -m "Deploy to GitHub pages [ci skip]"
-              git push --force --quiet origin gh-pages > /dev/null 2>&1
-
-              cd ..
-              rm -rf gh-pages-branch
-
-              echo "Finished GitHub pages Deployment!"
-
-  deploy-prod:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - deploy:
-          name: Deploy to Production
-          command: |
-              echo "iooooooo"
-
+            git config --global -l
+            git config --global user.email circleci@circleci
+            git config --global user.name CircleCI
+            yarn run deploy
 
 workflows:
   version: 2
-  build_accept_deploy:
+  build:
     jobs:
-      - prepare
+      - prepare:
+          filters:
+            branches:
+              ignore: gh-pages
+            tags:
+              only: /.*/
       - lint:
+          filters:
+            branches:
+              ignore: gh-pages
+            tags:
+              only: /.*/
           requires:
             - prepare
       - build:
+          filters:
+            branches:
+              ignore: gh-pages
+            tags:
+              only: /.*/
           requires:
             - lint
       - tu:
+          filters:
+            branches:
+              ignore: gh-pages
+            tags:
+              only: /.*/
           requires:
             - build
       - e2e:
+          filters:
+            branches:
+              ignore: gh-pages
+            tags:
+              only: /.*/
           requires:
             - build
       - deploy-github:
+          filters:
+              tags:
+                only: /^v.*/
+              branches:
+                only: master
           requires:
             - tu
             - e2e
-      - deploy-prod:
-          type: approval
-          requires:
-            - tu
-            - e2e
-
 
 # version: 2
 # jobs:

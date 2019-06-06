@@ -79,7 +79,7 @@ class App extends React.Component {
   createMenu = () => {
     return Object.entries(this.menuItems).map(([key, value]) => {
       const LinkComponent = React.forwardRef((props, ref) => <Link innerRef={ref} to={value} {...props}>{key}</Link>);
-      return <MenuItem className="MenuItem" onClick={() => this.selectMenuItem(key)} component={LinkComponent}>{key}</MenuItem>;
+      return <MenuItem className="MenuItem" onClick={() => this.selectMenuItem(key)} component={LinkComponent} key={key}>{key}</MenuItem>;
     });
   }
 
