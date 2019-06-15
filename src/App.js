@@ -18,7 +18,7 @@ import './App.css';
 
 import { Route, Link } from "react-router-dom";
 
-import ApolloClient from "apollo-boost";
+import ApolloClient from "apollo-client";
 import { ApolloProvider } from "react-apollo";
 
 // App specific imports
@@ -27,10 +27,64 @@ import Dashboard from './routes/Dashboard';
 
 import Config from './Config';
 
+// import ApolloClient, {createNetworkInterface} from 'apollo-boost';
+import { HttpLink } from 'apollo-link-http';
+import { WebSocketLink } from 'apollo-link-ws';
+import { split } from 'apollo-link';
+import { getMainDefinition } from 'apollo-utilities';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
-const client = new ApolloClient({
-  uri: Config.API_URI
+// Create regular NetworkInterface by using apollo-client's API:
+const httpLink = new HttpLink({
+  uri: Config.API_URI,
+  options: {
+    path: '/'
+  }
 });
+
+// Create WebSocket client
+const wsLink = new WebSocketLink({
+    uri: Config.API_URI.replace('http', 'ws'),
+    options: {
+      reconnect: true,
+      timeout: 30000,
+      connectionParams: {
+        // Pass any arguments you want for initialization
+      }
+    }
+});
+
+const link = split(
+  // split based on operation type
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    console.log(definition.operation);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink,
+);
+const cache = new InMemoryCache();
+
+
+// Extend the network interface with the WebSocket
+// const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+//     networkInterface,
+//     wsClient
+// );
+
+// Finally, create your ApolloClient instance with the modified network interface
+const client = new ApolloClient({
+    link: link,
+    cache
+});
+
+// const client = new ApolloClient({
+//   uri: Config.API_URI
+// });
 
 const baseTheme = createMuiTheme({
   palette: {

@@ -3,21 +3,27 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import Users from '../data/users';
+import CurrentState from '../data/state';
 
-function Dashboard() {
-  return (
-    <React.Fragment>
+class Dashboard extends React.Component {
+  // componentDidMount() {
+  //   this._subscribeToState();
+  // }
+
+  render() {
+    return (
+      <React.Fragment>
       <CssBaseline />
       <Container maxWidth="md">
-        <Typography variant="h6" className="TitleBar">
-          Dashboard
-        </Typography>
+      <Typography variant="h6" className="TitleBar">
+      Dashboard
+      </Typography>
 
-        <Users />
+      <CurrentState subscribeToState={this._subscribeToState} />
       </Container>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
 }
 
 export default Dashboard;
