@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/unsullied-ui/static/css/main.11a9b018.chunk.css",
-    "main.js": "/unsullied-ui/static/js/main.a3025d9e.chunk.js",
-    "main.js.map": "/unsullied-ui/static/js/main.a3025d9e.chunk.js.map",
+    "main.js": "/unsullied-ui/static/js/main.78278f38.chunk.js",
+    "main.js.map": "/unsullied-ui/static/js/main.78278f38.chunk.js.map",
     "runtime~main.js": "/unsullied-ui/static/js/runtime~main.8e0fe700.js",
     "runtime~main.js.map": "/unsullied-ui/static/js/runtime~main.8e0fe700.js.map",
-    "static/js/2.6faf49ed.chunk.js": "/unsullied-ui/static/js/2.6faf49ed.chunk.js",
-    "static/js/2.6faf49ed.chunk.js.map": "/unsullied-ui/static/js/2.6faf49ed.chunk.js.map",
+    "static/js/2.31269b08.chunk.js": "/unsullied-ui/static/js/2.31269b08.chunk.js",
+    "static/js/2.31269b08.chunk.js.map": "/unsullied-ui/static/js/2.31269b08.chunk.js.map",
     "index.html": "/unsullied-ui/index.html",
-    "precache-manifest.a132f1cbdb8d4eefa503bd87ebd00eb4.js": "/unsullied-ui/precache-manifest.a132f1cbdb8d4eefa503bd87ebd00eb4.js",
+    "precache-manifest.7ff41f9eba1bed59ac8eddfb848bb21f.js": "/unsullied-ui/precache-manifest.7ff41f9eba1bed59ac8eddfb848bb21f.js",
     "service-worker.js": "/unsullied-ui/service-worker.js",
     "static/css/main.11a9b018.chunk.css.map": "/unsullied-ui/static/css/main.11a9b018.chunk.css.map",
     "static/media/logo.svg": "/unsullied-ui/static/media/logo.5d5d9eef.svg"
