@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import logo from './logo.svg';
 import './App.css';
@@ -24,6 +25,7 @@ import { ApolloProvider } from "react-apollo";
 // App specific imports
 import Hello from './routes/Hello';
 import Dashboard from './routes/Dashboard';
+import WorkerUI from './routes/WorkerUI';
 
 import Config from './Config';
 
@@ -106,6 +108,7 @@ class App extends React.Component {
     this.menuItems = {
       "Home": '/',
       "Dashboard": '/dashboard',
+      "Worker UI": '/worker-ui',
     };
   }
 
@@ -141,6 +144,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <MuiThemeProvider theme={baseTheme}>
+          <CssBaseline />
           <ApolloProvider client={client}>
             <AppBar position="static">
               <Toolbar>
@@ -150,18 +154,19 @@ class App extends React.Component {
                 <Typography variant="h6" className="TitleBar">
                   Unsullied
                 </Typography>
-                {this.state.logged ?  <Button onClick={this.logout}>Logout</Button> : <Button onClick={this.login}>Login</Button>}
+                {this.state.logged ?  <Button variant="contained" color="secondary" onClick={this.logout}>Logout</Button> : <Button variant="contained" onClick={this.login}>Login</Button>}
 
               </Toolbar>
             </AppBar>
 
-            <Drawer open={this.state.open} docked={false} onBackdropClick={this.toggleMenu}>
+            <Drawer open={this.state.open} docked={"false"} onBackdropClick={this.toggleMenu}>
               <img src={logo} className="App-logo" alt="logo" />
               {this.createMenu()}
             </Drawer>
 
             <Route exact path='/' component={Hello}/>
             <Route path='/dashboard' component={Dashboard}/>
+            <Route path='/worker-ui' component={WorkerUI}/>
           </ApolloProvider>
         </MuiThemeProvider>
       </div>
