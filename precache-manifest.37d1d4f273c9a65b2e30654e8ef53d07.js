@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "774e17a58f31fd16849661af6954f543",
+    "revision": "6da53b53172215c38635de60ec82fd3e",
     "url": "/unsullied-ui/index.html"
   },
   {
-    "revision": "030234c30fc22a08638b",
+    "revision": "e62a9396aedf614f398f",
     "url": "/unsullied-ui/static/css/main.11a9b018.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/unsullied-ui/static/js/2.d9fd310a.chunk.js"
   },
   {
-    "revision": "030234c30fc22a08638b",
-    "url": "/unsullied-ui/static/js/main.6d6bd978.chunk.js"
+    "revision": "e62a9396aedf614f398f",
+    "url": "/unsullied-ui/static/js/main.915aa4a3.chunk.js"
   },
   {
     "revision": "bd0bb39e637a0b7e5483",
