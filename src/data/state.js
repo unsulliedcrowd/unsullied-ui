@@ -1,18 +1,36 @@
 import React from 'react';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import JSONPretty from 'react-json-pretty';
+import * as  JSONPrettyMon from 'react-json-pretty/dist/1337';
 
 const STATE_PROPS_QUERY = `
 {
   currentTime
   config {
     schemaFile
+    taskGenerationConfig {
+      initialLocation
+    }
   }
 
   crowd {
     stats {
       availableWorkersTotal
     }
+  }
+
+  tasks {
+    stats {
+      availableTasksTotal
+    }
+  }
+
+  knowledge {
+    stats {
+      totalEntityTypes
+    }
+    knownClasses
   }
 
 }`;
@@ -65,7 +83,7 @@ class CurrentState extends React.Component {
       }
       // this.setState({ currentState: data.currentState });
 
-      return <div>{JSON.stringify(data.currentState)}</div>;
+      return <JSONPretty className={"json-pretty"} theme={JSONPrettyMon} data={data.currentState}></JSONPretty>;
       // data.currentState
     }}
 

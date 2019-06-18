@@ -24,6 +24,7 @@ import { ApolloProvider } from "react-apollo";
 
 // App specific imports
 import Hello from './routes/Hello';
+import ConfigRoute from './routes/Config';
 import Dashboard from './routes/Dashboard';
 import WorkerUI from './routes/WorkerUI';
 
@@ -32,6 +33,8 @@ import Config from './Config';
 // import ApolloClient, {createNetworkInterface} from 'apollo-boost';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
+import { createUploadLink } from 'apollo-upload-client';
+
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -67,7 +70,13 @@ const link = split(
     );
   },
   wsLink,
-  httpLink,
+  createUploadLink({
+    uri: Config.API_URI,
+    options: {
+      path: '/'
+    }
+  }),
+  // httpLink,
 );
 const cache = new InMemoryCache();
 
@@ -106,8 +115,8 @@ class App extends React.Component {
     };
 
     this.menuItems = {
-      "Home": '/',
-      "Dashboard": '/dashboard',
+      "Dashboard": '/',
+      "Config": '/config',
       "Worker UI": '/worker-ui',
     };
   }
@@ -152,7 +161,7 @@ class App extends React.Component {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" className="TitleBar">
-                  Unsullied
+                  UnsulliedKnowledge
                 </Typography>
                 {this.state.logged ?  <Button variant="contained" color="secondary" onClick={this.logout}>Logout</Button> : <Button variant="contained" onClick={this.login}>Login</Button>}
 
@@ -164,8 +173,8 @@ class App extends React.Component {
               {this.createMenu()}
             </Drawer>
 
-            <Route exact path='/' component={Hello}/>
-            <Route path='/dashboard' component={Dashboard}/>
+            <Route exact path='/' component={Dashboard}/>
+            <Route path='/config' component={ConfigRoute}/>
             <Route path='/worker-ui' component={WorkerUI}/>
           </ApolloProvider>
         </MuiThemeProvider>

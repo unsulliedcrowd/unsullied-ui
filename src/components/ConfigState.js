@@ -4,16 +4,14 @@ import PropTypes from 'prop-types';
 import JSONPretty from 'react-json-pretty';
 import * as  JSONPrettyMon from 'react-json-pretty/dist/1337';
 
-import MicroTask from '../components/MicroTask';
-
-class WorkerState extends React.Component {
+class ConfigState extends React.Component {
   static propTypes =  {
     state: PropTypes.any
   }
 
   constructor({ state }) {
     super();
-    // console.log('Making WorkerState:', state);
+    // console.log('Making ConfigState:', state);
     this.state = state;
   }
 
@@ -22,10 +20,9 @@ class WorkerState extends React.Component {
       <React.Fragment>
       <CssBaseline />
       <JSONPretty className={"json-pretty"} theme={JSONPrettyMon} data={this.state}></JSONPretty>
-      {this.state.currentTask && <MicroTask task={this.state.currentTask} />}
       </React.Fragment>
     );
   }
 }
 
-export default WorkerState;
+export default ConfigState;

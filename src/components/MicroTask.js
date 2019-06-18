@@ -8,15 +8,15 @@ import { withApollo } from 'react-apollo';
 import gql from "graphql-tag";
 
 const SUBMIT_TASK_MUTATION = gql`
-  mutation TaskResult($taskString: String!, $taskResultString: String!) {
-    submitTaskResult(taskString: $taskString, taskResultString: $taskResultString) {
+  mutation TaskResult($taskString: String!, $taskResultString: String!, $file: Upload) {
+    submitTaskResult(taskString: $taskString, taskResultString: $taskResultString, file: $file) {
       isSubmitted
     }
   }
 `;
 
 class MicroTask extends React.Component {
-  propTypes =  {
+  static propTypes =  {
     client: PropTypes.any,
     task: PropTypes.any
   }
@@ -25,15 +25,28 @@ class MicroTask extends React.Component {
     super();
     // console.log('Making MicroTask:', task);
     this.state = task;
+    this.file = null;
   }
 
-  submitResult() {
-    // console.log('Submitting result!');
+  handleFileChange({ target: { validity, files: [file] } }) {
+    console.log('Handling file change:', validity, file);
+    if (validity.valid) this.file = file;
+  }
+
+
+  submitResult(e) {
+    console.log('Submitting result!');
+    e.preventDefault();
+
     const taskString = JSON.stringify(this.state);
     const taskResultString = JSON.stringify({ taskResult: "test2" });
+
+    // const file = new Blob(["test content"], { type: 'text/plain' });
+    // file.name = `test.txt`;
+
     this.props.client.mutate({
       mutation: SUBMIT_TASK_MUTATION,
-      variables: { taskString, taskResultString },
+      variables: { taskString, taskResultString, file: this.file },
     });
   }
 
@@ -41,18 +54,20 @@ class MicroTask extends React.Component {
     return (
       <React.Fragment>
       <CssBaseline />
-      <Typography variant="h6" className="TitleBar">
-        {this.state.taskType} Task!
-      </Typography>
+      <form onSubmit={(...args) => this.submitResult(...args)}>
+      {this.state.interfaceType === "QUESTION" && <Typography variant="h5" className="TaskQuestionInterface">{this.state.taskType} Task: {this.state.interfaceParams[0]}</Typography>}
 
-      {this.state.interfaceType === "QUESTION" && <div>Question interface: {JSON.stringify(this.state.interfaceParams)}.</div>}
-      {this.state.resultType === "LABEL" && <div>Label result: {JSON.stringify(this.state.resultParams)}.</div>}
+      <input type="file" required onChange={(...args) => this.handleFileChange(...args)} />
 
-      <Button color="primary" variant="contained" onClick={() => this.submitResult()}>Submit result!</Button>
 
+      <Button type="submit" color="primary" variant="contained">Submit result!</Button>
+      </form>
       </React.Fragment>
     );
   }
 }
 
 export default withApollo(MicroTask);
+
+// {<div>{this.state.interfaceType} interface: {JSON.stringify(this.state.interfaceParams)}.</div>}
+// {<div>{this.state.resultType} result: {JSON.stringify(this.state.resultParams)}.</div>}

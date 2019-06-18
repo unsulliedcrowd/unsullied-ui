@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import WorkerState from '../data/worker-state';
+import ConfigStateData from '../data/config-state';
 
 class Dashboard extends React.Component {
   // componentDidMount() {
@@ -15,11 +15,11 @@ class Dashboard extends React.Component {
       <React.Fragment>
       <CssBaseline />
       <Container maxWidth="md">
-      <Typography variant="h4" className="TitleBar">
-      Worker UI
+      <Typography variant="h6" className="TitleBar">
+      Config
       </Typography>
 
-      <WorkerState subscribeToState={this._subscribeToState} />
+      <ConfigStateData subscribeToState={this._subscribeToState} />
       </Container>
       </React.Fragment>
     );

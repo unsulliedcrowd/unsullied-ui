@@ -43,3 +43,8 @@
 .MenuIconButton {
   margin-right: auto;
 }
+
+.json-pretty {
+  text-align: left;
+  font-size: 10pt;
+}
