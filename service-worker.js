@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/unsullied-ui/precache-manifest.07ca9cd74d60f214eb5b413f9390afac.js"
+  "/unsullied-ui/precache-manifest.019118282299f5b50b4dabf24868704f.js"
 );
 
 self.addEventListener('message', (event) => {
