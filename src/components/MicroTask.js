@@ -2,6 +2,11 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 import { Button } from '@material-ui/core';
 import { withApollo } from 'react-apollo';
@@ -62,14 +67,40 @@ class MicroTask extends React.Component {
 
   }
 
+  handleBooleanChange() {
+    // setValue(event.target.value);
+  }
+
+
   render() {
     let content;
     if (!this.state.submitted) {
+      if (this.state.task.resultType === "IMAGE") {
+        content = <form onSubmit={(...args) => this.submitResult(...args)}>
+        <input type="file" required onChange={(...args) => this.handleFileChange(...args)} />
+        {this.state.fileUrl && <img src={this.state.fileUrl} className="imagePreview" alt="file preview" />}
+        <Button type="submit" color="primary" variant="contained">Submit result!</Button>
+        </form>;
+
+      } else if (this.state.task.resultType === "BOOLEAN") {
+      const positive = "is full";
+      const negative = "isn't full";
+
       content = <form onSubmit={(...args) => this.submitResult(...args)}>
-                  <input type="file" required onChange={(...args) => this.handleFileChange(...args)} />
-                  {this.state.fileUrl && <img src={this.state.fileUrl} className="imagePreview" alt="file preview" />}
+                  <FormControl component="fieldset">
+                    <FormLabel component="legend">Label</FormLabel>
+                    <RadioGroup
+                      aria-label="Label"
+                      name="gender1"
+                      onChange={(...args) => this.handleBooleanChange(...args)}
+                    >
+                      <FormControlLabel value={positive} control={<Radio />} label={positive} />
+                      <FormControlLabel value={negative} control={<Radio />} label={negative} />
+                    </RadioGroup>
+                  </FormControl>
                   <Button type="submit" color="primary" variant="contained">Submit result!</Button>
-                </form>
+                </form>;
+      }
     } else {
       content = <div>Task succesfully completed! Waiting for next task...</div>;
     }
