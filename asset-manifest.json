@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/unsullied-ui/static/css/main.11a9b018.chunk.css",
-    "main.js": "/unsullied-ui/static/js/main.915aa4a3.chunk.js",
-    "main.js.map": "/unsullied-ui/static/js/main.915aa4a3.chunk.js.map",
+    "main.css": "/unsullied-ui/static/css/main.44552996.chunk.css",
+    "main.js": "/unsullied-ui/static/js/main.e049eefe.chunk.js",
+    "main.js.map": "/unsullied-ui/static/js/main.e049eefe.chunk.js.map",
     "runtime~main.js": "/unsullied-ui/static/js/runtime~main.8e0fe700.js",
     "runtime~main.js.map": "/unsullied-ui/static/js/runtime~main.8e0fe700.js.map",
-    "static/js/2.d9fd310a.chunk.js": "/unsullied-ui/static/js/2.d9fd310a.chunk.js",
-    "static/js/2.d9fd310a.chunk.js.map": "/unsullied-ui/static/js/2.d9fd310a.chunk.js.map",
+    "static/js/2.45ab0fbb.chunk.js": "/unsullied-ui/static/js/2.45ab0fbb.chunk.js",
+    "static/js/2.45ab0fbb.chunk.js.map": "/unsullied-ui/static/js/2.45ab0fbb.chunk.js.map",
     "index.html": "/unsullied-ui/index.html",
-    "precache-manifest.37d1d4f273c9a65b2e30654e8ef53d07.js": "/unsullied-ui/precache-manifest.37d1d4f273c9a65b2e30654e8ef53d07.js",
+    "precache-manifest.69b71b13957165d11007073e1d4d7805.js": "/unsullied-ui/precache-manifest.69b71b13957165d11007073e1d4d7805.js",
     "service-worker.js": "/unsullied-ui/service-worker.js",
-    "static/css/main.11a9b018.chunk.css.map": "/unsullied-ui/static/css/main.11a9b018.chunk.css.map",
+    "static/css/main.44552996.chunk.css.map": "/unsullied-ui/static/css/main.44552996.chunk.css.map",
     "static/media/logo.svg": "/unsullied-ui/static/media/logo.5d5d9eef.svg"
   }
 }
