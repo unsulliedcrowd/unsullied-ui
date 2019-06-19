@@ -19,7 +19,7 @@ class Dashboard extends React.Component {
       Worker UI
       </Typography>
 
-      <WorkerState subscribeToState={this._subscribeToState} />
+      <WorkerState />
       </Container>
       </React.Fragment>
     );

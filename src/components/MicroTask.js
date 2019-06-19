@@ -8,8 +8,8 @@ import { withApollo } from 'react-apollo';
 import gql from "graphql-tag";
 
 const SUBMIT_TASK_MUTATION = gql`
-  mutation TaskResult($taskString: String!, $taskResultString: String!, $file: Upload) {
-    submitTaskResult(taskString: $taskString, taskResultString: $taskResultString, file: $file) {
+  mutation TaskResult($workerId: ID!, $taskString: String!, $taskResultString: String!, $file: Upload) {
+    submitTaskResult(workerId: $workerId, taskString: $taskString, taskResultString: $taskResultString, file: $file) {
       isSubmitted
     }
   }
@@ -18,27 +18,35 @@ const SUBMIT_TASK_MUTATION = gql`
 class MicroTask extends React.Component {
   static propTypes =  {
     client: PropTypes.any,
-    task: PropTypes.any
+    task: PropTypes.any,
+    workerId: PropTypes.any
   }
 
-  constructor({ task }) {
+  constructor({ workerId, task }) {
     super();
     // console.log('Making MicroTask:', task);
-    this.state = task;
-    this.file = null;
+    this.state = {
+      workerId,
+      task,
+      file: null,
+      fileUrl: null,
+      submitted: false,
+    }
   }
 
   handleFileChange({ target: { validity, files: [file] } }) {
-    console.log('Handling file change:', validity, file);
-    if (validity.valid) this.file = file;
+    // console.log('Handling file change:', validity, file);
+    if (validity.valid) {
+      this.setState({ file: file, fileUrl: URL.createObjectURL(file) });
+    }
   }
 
 
   submitResult(e) {
-    console.log('Submitting result!');
+    // console.log('Submitting result!');
     e.preventDefault();
 
-    const taskString = JSON.stringify(this.state);
+    const taskString = JSON.stringify(this.state.task);
     const taskResultString = JSON.stringify({ taskResult: "test2" });
 
     // const file = new Blob(["test content"], { type: 'text/plain' });
@@ -46,22 +54,33 @@ class MicroTask extends React.Component {
 
     this.props.client.mutate({
       mutation: SUBMIT_TASK_MUTATION,
-      variables: { taskString, taskResultString, file: this.file },
+      variables: { workerId: this.state.workerId, taskString, taskResultString, file: this.state.file },
+      update: () => {
+        this.setState({ submitted: true});
+      }
     });
+
   }
 
   render() {
+    let content;
+    if (!this.state.submitted) {
+      content = <form onSubmit={(...args) => this.submitResult(...args)}>
+                  <input type="file" required onChange={(...args) => this.handleFileChange(...args)} />
+                  {this.state.fileUrl && <img src={this.state.fileUrl} className="imagePreview" alt="file preview" />}
+                  <Button type="submit" color="primary" variant="contained">Submit result!</Button>
+                </form>
+    } else {
+      content = <div>Task succesfully completed! Waiting for next task...</div>;
+    }
+
     return (
       <React.Fragment>
       <CssBaseline />
-      <form onSubmit={(...args) => this.submitResult(...args)}>
-      {this.state.interfaceType === "QUESTION" && <Typography variant="h5" className="TaskQuestionInterface">{this.state.taskType} Task: {this.state.interfaceParams[0]}</Typography>}
+      {this.state.task.interfaceType === "QUESTION" && <Typography variant="h5" className="TaskQuestionInterface">{this.state.task.taskType} Task: {this.state.task.interfaceParams[0]}</Typography>}
 
-      <input type="file" required onChange={(...args) => this.handleFileChange(...args)} />
+      {content}
 
-
-      <Button type="submit" color="primary" variant="contained">Submit result!</Button>
-      </form>
       </React.Fragment>
     );
   }
@@ -69,5 +88,5 @@ class MicroTask extends React.Component {
 
 export default withApollo(MicroTask);
 
-// {<div>{this.state.interfaceType} interface: {JSON.stringify(this.state.interfaceParams)}.</div>}
-// {<div>{this.state.resultType} result: {JSON.stringify(this.state.resultParams)}.</div>}
+// {<div>{this.state.task.interfaceType} interface: {JSON.stringify(this.state.task.interfaceParams)}.</div>}
+// {<div>{this.state.task.resultType} result: {JSON.stringify(this.state.task.resultParams)}.</div>}

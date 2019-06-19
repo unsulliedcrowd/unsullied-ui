@@ -39,7 +39,7 @@ class ConfigStateData extends React.Component {
       variables: { },
       updateQuery: (prev, { subscriptionData }) => {
         // debugger;
-        const res = Object.assign({}, prev, { configState: subscriptionData.data });
+        const res = Object.assign({}, { configState: subscriptionData.data });
         // this.setState();
         return res;
       }
@@ -63,7 +63,7 @@ class ConfigStateData extends React.Component {
           }
           // this.setState({ currentState: data.currentState });
 
-          console.log('Subscribe:', data);
+          // console.log('Subscribe:', data);
 
           return <ConfigState state={data.configState} />;
           // data.currentState

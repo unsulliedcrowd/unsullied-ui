@@ -16,6 +16,7 @@ const STATE_PROPS_QUERY = `
 
   crowd {
     stats {
+      seenWorkersTotal
       availableWorkersTotal
     }
   }
@@ -60,7 +61,7 @@ class CurrentState extends React.Component {
       document: STATE_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
         // debugger;
-        const res = Object.assign({}, prev, subscriptionData.data);
+        const res = Object.assign({}, subscriptionData.data);
         // this.setState();
         return res;
       }

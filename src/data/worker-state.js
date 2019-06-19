@@ -7,6 +7,7 @@ import WorkerState from '../components/WorkerState';
 const STATE_PROPS_QUERY = `
 {
   isOnline
+  isWorkingOnTask
   currentTask {
     taskType
     taskParams
@@ -56,7 +57,8 @@ class WorkerStateData extends React.Component {
       variables: { workerId: this.state.workerId },
       updateQuery: (prev, { subscriptionData }) => {
         // debugger;
-        const res = Object.assign({}, prev, { workerState: subscriptionData.data.currentState });
+        const res = Object.assign({}, subscriptionData.data);
+        // console.log('Updating worker state to:', res);
         // this.setState();
         return res;
       }
@@ -106,13 +108,12 @@ class WorkerStateData extends React.Component {
 
           // console.log('Subscribe:', data);
 
-          return <WorkerState state={data.workerState} />;
+          return <WorkerState workerState={data.workerState} workerId={this.state.workerId} />;
           // data.currentState
         }}
 
         </Query>
       }
-
     </span>;
   }
 }

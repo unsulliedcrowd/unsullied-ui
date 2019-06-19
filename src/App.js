@@ -23,7 +23,6 @@ import ApolloClient from "apollo-client";
 import { ApolloProvider } from "react-apollo";
 
 // App specific imports
-import Hello from './routes/Hello';
 import ConfigRoute from './routes/Config';
 import Dashboard from './routes/Dashboard';
 import WorkerUI from './routes/WorkerUI';
@@ -31,21 +30,12 @@ import WorkerUI from './routes/WorkerUI';
 import Config from './Config';
 
 // import ApolloClient, {createNetworkInterface} from 'apollo-boost';
-import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { createUploadLink } from 'apollo-upload-client';
 
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-
-// Create regular NetworkInterface by using apollo-client's API:
-const httpLink = new HttpLink({
-  uri: Config.API_URI,
-  options: {
-    path: '/'
-  }
-});
 
 // Create WebSocket client
 const wsLink = new WebSocketLink({
